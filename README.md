@@ -13,6 +13,7 @@ A aplicação foi construída utilizando Node.js com Express.js e conecta-se ao 
 - Node.js
 - Express.js
 - PostgreSQL
+
 **Segurança**:
 
 - Criptografia de senhas com bcrypt
