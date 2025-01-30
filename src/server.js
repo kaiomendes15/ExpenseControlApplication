@@ -9,6 +9,7 @@ const loginRouter = require('./routes/auth/login/LoginRoute');
 // usar as rotas
     // use() é um middleware que executa todas as requisições http independente da informação
 app.use(loginRouter)
+app.use(registerRouter)
 
 app.listen(PORT, () => {
     console.log(`Server rodando na porta ${PORT}`)
