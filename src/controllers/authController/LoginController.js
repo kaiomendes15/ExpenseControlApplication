@@ -1,4 +1,4 @@
-const LoginModel = require('../../models/authModels/LoginModel')
+const LoginModel = require('../../models/services/authModels/LoginModel')
 
 exports.getLogin = ((req, res) => {
 
