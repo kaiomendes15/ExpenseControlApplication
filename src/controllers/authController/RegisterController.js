@@ -1,6 +1,8 @@
 const RegisterModel = require('../../models/services/authModels/RegisterModel')
 
 exports.registerUser = ((req, res) => {
+    console.log("Post de registro")
+    console.log("Corpo da requisição:", req.body); // Adicionando para depuração
     const { email, username, password } = req.body;
 
     if (!email || !username || !password) {
@@ -14,6 +16,10 @@ exports.registerUser = ((req, res) => {
         return res.status(400).json({ message: 'Email já cadastrado.'})
     }
 
-    return res.status(400).json({message: 'Usuário criado com sucesso.'})
+    return res.status(200).json({message: 'Usuário criado com sucesso.'})
+    
+})
+
+exports.deleteUser = ((req, res) => {
     
 })
