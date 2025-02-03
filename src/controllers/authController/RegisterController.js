@@ -2,20 +2,33 @@ const RegisterModel = require('../../models/services/authModels/RegisterModel')
 
 exports.registerUser = ((req, res) => {
     console.log("Post de registro")
-    console.log("Corpo da requisição:", req.body); // Adicionando para depuração
-    const { email, username, password } = req.body;
+    // console.log("Corpo da requisição:", req.body); // Adicionando para depuração
+    const { email, username, password, verifyPassword } = req.body;
 
-    if (!email || !username || !password) {
-        return res.status(400).json({ message: 'Todos os campos são obrigatórios.' })
+    if (!email) {
+        return res.status(400).json({ message: 'Email is required' })
+    }
+    if (!username) {
+        return res.status(400).json({ message: 'Username is required.' })
+    }
+    if (!password) {
+        return res.status(400).json({ message: 'Password is required.' })
+    }
+    if (!verifyPassword) {
+        return res.status(400).json({ message: 'Please verify your password' })
+    }
+
+    if (password !== verifyPassword) {
+        return res.status(400).json({ message: 'Passwords do not match' })
     }
 
     const register = new RegisterModel()
     const wasUserCreated = register.createUser(email, username, password)
 
     if (!wasUserCreated) {
-        return res.status(400).json({ message: 'Email já cadastrado.'})
+        return res.status(400).json({ message: 'Email already registered'})
     }
 
-    return res.status(200).json({message: 'Usuário criado com sucesso.'})
+    return res.status(200).json({message: 'User registered successfully'})
     
 })
