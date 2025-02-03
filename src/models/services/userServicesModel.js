@@ -1,21 +1,21 @@
 const pool = require('../data')
 const bcrypt = require('bcrypt')
+const { verifyUser, verifyPassowrd } = require('../repositories/repositories')
 
 module.exports = class UserService {
     constructor(){}
     deleteUser = async (email, password) => {
-        const verifyQuery = 'SELECT * FROM users WHERE email = $1'
-        const verifyResult = await pool.query(verifyQuery, [email])
-    
-        if (verifyResult.rows.length === 0) {
+        const userExist = await verifyUser(email)
+        // console.log(userExist);
+        
+        
+        if (!userExist) {
             console.log('Usuário não cadastrado')
             return false
         }
-    
-        const hashedPassword = await pool.query('SELECT password FROM users WHERE email = $1', [email])
-        console.log(typeof hashedPassword, hashedPassword)
-    
-        const passwordMatch = await bcrypt.compare(password, hashedPassword)
+        
+        const passwordMatch = await verifyPassowrd(email, password)
+        // console.log(passwordMatch);
     
         if (!passwordMatch) {
             console.log("Senha incorreta.")
