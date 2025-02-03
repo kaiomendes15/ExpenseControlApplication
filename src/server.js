@@ -5,6 +5,7 @@ const PORT = 3000;
 // rotas 
 const registerRouter = require('./routes/auth/register/RegisterRoute');
 const loginRouter = require('./routes/auth/login/LoginRoute');
+const userServiceRouter = require('./routes/userServiceRoute');
 
 // middleware para processar o corpo das requisições
 app.use(express.json())
@@ -13,6 +14,7 @@ app.use(express.json())
     // use() é um middleware que executa todas as requisições http independente da informação
 app.use(loginRouter)
 app.use(registerRouter)
+app.use(userServiceRouter)
 
 
 app.listen(PORT, () => {
