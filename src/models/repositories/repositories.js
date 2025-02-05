@@ -19,4 +19,12 @@ async function verifyPassowrd(email, password) {
         return passwordMatch
 }
 
-module.exports = { verifyUser, verifyPassowrd }
+async function getUserId(email) {
+    const query = 'SELECT id FROM users WHERE LOWER(TRIM(email)) = LOWER(TRIM($1));'
+    const result = await pool.query(query, [email])
+
+    return result.rows[0].id
+}
+
+
+module.exports = { verifyUser, verifyPassowrd, getUserId }
