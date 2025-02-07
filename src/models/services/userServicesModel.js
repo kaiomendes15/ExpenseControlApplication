@@ -1,6 +1,6 @@
 const pool = require('../data')
 const bcrypt = require('bcrypt')
-const { verifyUser, verifyPassowrd } = require('../repositories/repositories')
+const { verifyUser, verifyPassword } = require('../repositories/repositories')
 
 module.exports = class UserService {
     constructor(){}
@@ -10,16 +10,14 @@ module.exports = class UserService {
         
         
         if (!userExist) {
-            console.log('Usuário não cadastrado')
-            return false
+            return 'User not found.'
         }
         
-        const passwordMatch = await verifyPassowrd(email, password)
+        const passwordMatch = await verifyPassword(email, password)
         // console.log(passwordMatch);
     
         if (!passwordMatch) {
-            console.log("Senha incorreta.")
-            return false
+            return "incorrect password."
         }
     
         await pool.query('DELETE FROM users WHERE email = $1', [email])
