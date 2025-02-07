@@ -1,6 +1,6 @@
 const RegisterModel = require('../../models/services/authModels/RegisterModel')
 
-exports.registerUser = ((req, res) => {
+exports.registerUser = (async (req, res) => {
     console.log("Post de registro")
     // console.log("Corpo da requisição:", req.body); // Adicionando para depuração
     const { email, username, password, verifyPassword } = req.body;
@@ -23,9 +23,9 @@ exports.registerUser = ((req, res) => {
     }
 
     const register = new RegisterModel()
-    const wasUserCreated = register.createUser(email, username, password)
+    const createRequest = await register.createUser(email, username, password)
 
-    if (!wasUserCreated) {
+    if (createRequest === 'Email already registered.') {
         return res.status(400).json({ message: 'Email already registered'})
     }
 
