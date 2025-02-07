@@ -5,13 +5,13 @@ const { verifyUser } = require('../../repositories/repositories')
 module.exports = class RegisterModel {
     constructor(){}
     async createUser(email, username, password) {
+
         const userExist = await verifyUser(email)
         // console.log(userExist);
         
 
         if (userExist) {
-            console.log('Email já cadastrado.');
-            return false
+            return 'Email already registered.'
         }
 
         const hash = await bcrypt.hash(password, 10)
@@ -19,8 +19,7 @@ module.exports = class RegisterModel {
 
         const query = 'INSERT INTO users (email, username, password) VALUES ($1, $2, $3)'
         await pool.query(query, [email, username, hash])
-        console.log('Usuário registrado com sucesso!')
 
-        return true
+        return 'User registered successfully.'
     }
 }
