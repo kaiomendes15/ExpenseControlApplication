@@ -6,6 +6,7 @@ const PORT = 3000;
 const registerRouter = require('./routes/auth/register/RegisterRoute');
 const loginRouter = require('./routes/auth/login/LoginRoute');
 const userServiceRouter = require('./routes/userServiceRoute');
+const transactionRouter = require('./routes/transactions')
 
 // middleware para processar o corpo das requisições
 app.use(express.json())
@@ -15,6 +16,7 @@ app.use(express.json())
 app.use(loginRouter)
 app.use(registerRouter)
 app.use(userServiceRouter)
+app.use(transactionRouter)
 
 
 app.listen(PORT, () => {
