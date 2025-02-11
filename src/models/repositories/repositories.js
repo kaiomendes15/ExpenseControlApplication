@@ -30,6 +30,7 @@ async function verifyPassword(email, password) {
         return passwordMatch
 }
 
+// pega o id do usuário
 async function getUserId(email) {
     const query = 'SELECT id FROM users WHERE LOWER(TRIM(email)) = LOWER(TRIM($1));'
     const result = await pool.query(query, [email])
@@ -37,6 +38,7 @@ async function getUserId(email) {
     return result.rows[0].id
 }
 
+// verificação de chave jwt
 async function verifyJWT(req, res, next) {
     const token = req.headers['x-access-token'];
 
@@ -44,7 +46,7 @@ async function verifyJWT(req, res, next) {
         if (err) return res.status(401).json({message: 'Unauthorized user'});
 
         req.userId = decodedToken.userId;
-        console.log(`userId: ${req.userId}`)
+        // console.log(`userId: ${req.userId}`)
         next()
     })
 }
