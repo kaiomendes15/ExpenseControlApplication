@@ -14,10 +14,10 @@ exports.Login = (async (req, res) => {
     const token = await user.login(email, password)
 
     if (token === 'User not found') {
-        return res.status(401).json({message: 'User not found'})
+        return res.status(404).json({message: 'User not found'})
     }
     if (token === 'Invalid Password.') {
-        return res.status(401).json({message: 'Invalid Password.'})
+        return res.status(400).json({message: 'Invalid Password.'})
     }
 
     return res.json({ auth: true, token })

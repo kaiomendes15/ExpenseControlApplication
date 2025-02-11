@@ -6,6 +6,8 @@ const transactionController = require('../controllers/transactionController')
 
 router.post('/transactions', verifyJWT, transactionController.createTransaction);
 router.get('/transactions', verifyJWT, transactionController.getTransactionByUserId);
+router.get('/transactions/:id', verifyJWT, transactionController.getTransactionById);
+router.put('/transactions/:id', verifyJWT, transactionController.editTransactionById);
 
 
 module.exports = router
