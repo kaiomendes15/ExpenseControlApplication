@@ -1,14 +1,14 @@
 const TransactionModel = require('../models/services/transactionModel')
 exports.createTransaction = (async (req, res, next) => {
-    console.log("entrou no controller")
-    const { amount, category, date, type, note } = req.body;
+    const { amount, category, type, note } = req.body;
     const service = new TransactionModel();
-    const transaction = await service.createTransaction(req.userId, amount, category, type, note)
+    const status = await service.createTransaction(req.userId, amount, category, type, note)
 
-    if (transaction === 'User not found.') {
+    if (status === 'User not found.') {
         return res.status(404).json({message: 'User not found.'})
     }
 
+    return res.status(200).json({status})
     // console.log(transaction)
 
 })
@@ -42,5 +42,21 @@ exports.editTransactionById = (async (req, res, next) => {
     const service = new TransactionModel();
     const update = await service.editTransactionById(id, amount, category, type, note)
 
-    return res.json({update})
+    if (update === `Transaction not found.`) {
+        return res.status(404).json({message : `Transaction not found.`})
+    }
+
+    return res.status(200).json({update})
+})
+
+exports.deleteTransaction = (async (req, res, next) => {
+    const id = req.params.id
+    
+    const service = new TransactionModel();
+    const status = await service.deleteTransactionById(id);
+
+    if (status === `Transaction not found.`) {
+        return res.status(404).json({message : `Transaction not found.`})
+    }
+    return res.status(200).json({status})
 })

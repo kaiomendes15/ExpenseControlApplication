@@ -47,25 +47,56 @@ module.exports = class Transactions {
         
     }
 
-    async editTransactionById(transactionId, amount, category, type, note = '') {
-        const query = `
-  BEGIN;
-  UPDATE transactions 
-  SET amount = $1, category = $2, type = $3, note = $4 
-  WHERE id = $5;
-  ROLLBACK;
-  COMMIT;
-`;
-        const update = await pool.query(query, [transactionId, amount, category, type, note]);
+    async editTransactionById(transactionId, amount, category, type, note = ''){
+        const client = await pool.connect()
+        console.log("Entrou na função")
+        try {
+            await client.query('BEGIN')
+            const query = `UPDATE transactions SET amount = $1, category = $2,type = $3, note = $4 WHERE id = $5`;
 
-        console.log(update)
-        return update
+            await client.query(query, [amount, category, type, note, transactionId]);
+            await client.query('COMMIT')
+
+            const service = new Transactions()
+            const transaction = await service.getTransactionById(transactionId)
+
+            if (transaction === `Transaction not found.`) {
+                return 'Transaction not found.'
+            }
+
+            return 'Transaction updated successfully'
+            
+        } catch (e) {
+            await client.query('ROLLBACK')
+            throw e
+        } finally {
+            client.release()
+        }
     }
 
     async deleteTransactionById(transactionId) {
-        const query = 'DELETE FROM transactions WHERE id = $1';
-        const result = await pool.query(query, [transactionId])
+        const client = await pool.connect()
 
-        return result
+        const service = new Transactions()
+        const transaction = await service.getTransactionById(transactionId)
+        if (transaction === `Transaction not found.`) {
+            return 'Transaction not found.'
+        }
+
+        try {
+            await client.query('BEGIN')
+            const query = 'DELETE FROM transactions WHERE id = $1';
+            await client.query(query, [ transactionId ]);
+            await client.query('COMMIT');
+    
+            return `Transaction deleted successfully.`
+
+        } catch (e) {
+            await client.query('ROLLBACK')
+            console.log(e)
+            throw e 
+        } finally {
+            client.release()
+        }
     }
 }
