@@ -1,6 +1,6 @@
 const pool = require('../data')
 const bcrypt = require('bcrypt');
-const { getUserInfos, verifyUser } = require('../repositories/repositories')
+const { getUserInfos, verifyUser, getIncome } = require('../repositories/repositories')
 const TransactionModel = require('../services/transactionModel')
 
 module.exports = class Reports {
@@ -9,6 +9,9 @@ module.exports = class Reports {
         
         const user = new TransactionModel()
         const transactions = await user.getUserTransactions(userId)
-        return transactions
+        
+        const income = getIncome(transactions)
+
+        return income
     }
 }

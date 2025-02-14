@@ -51,5 +51,18 @@ async function verifyJWT(req, res, next) {
     })
 }
 
+async function getIncome(arrayTransactions) {
+    let income = 0;
+    arrayTransactions.forEach(transaction => {
+        console.log(transaction.type)
+        if (transaction.type === "+") {
+            income += parseFloat(transaction.amount)
+            console.log(income)
+        }
+    });
 
-module.exports = { verifyUser, verifyPassword, getUserId, verifyJWT, getUserInfos }
+    return income
+}
+
+
+module.exports = { verifyUser, verifyPassword, getUserId, verifyJWT, getUserInfos, getIncome }
