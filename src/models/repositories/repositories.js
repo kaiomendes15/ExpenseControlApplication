@@ -51,6 +51,15 @@ async function verifyJWT(req, res, next) {
     })
 }
 
+// formatar o tipo da trnasação
+function formatType(type) {
+    if (type === "+") {
+            return "Received"
+    }
+
+    return "Spent"
+}
+
 async function getIncome(arrayTransactions) {
     let income = 0;
     let numberIncome = 0;
@@ -100,7 +109,14 @@ async function categorySummary(arrayTransactions, category) {
         // console.log(transaction.category)
         if (transaction.category === category) {
             count++
-            descriptions.push(transaction.note)
+            const note = transaction.note
+            const amount = transaction.amount
+            const type = formatType(transaction.type)
+            descriptions.push({
+                note,
+                amount,
+                type
+            })
 
             if (transaction.type === "+") {
                 incomeValue += parseFloat(transaction.amount)
