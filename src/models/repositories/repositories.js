@@ -51,5 +51,94 @@ async function verifyJWT(req, res, next) {
     })
 }
 
+// formatar o tipo da trnasação
+function formatType(type) {
+    if (type === "+") {
+            return "Received"
+    }
 
-module.exports = { verifyUser, verifyPassword, getUserId, verifyJWT, getUserInfos }
+    return "Spent"
+}
+
+async function getIncome(arrayTransactions) {
+    let income = 0;
+    let numberIncome = 0;
+    arrayTransactions.forEach(transaction => {
+        // console.log(transaction.type)
+        if (transaction.type === "+") {
+            income += parseFloat(transaction.amount)
+            numberIncome++
+            // console.log(income)
+            // console.log(numberIncome)
+        }
+    });
+
+    return {
+        income,
+        numberIncome
+    }
+}
+
+async function getExpenses(arrayTransactions) {
+    // aqui será trabalhado com valores positivos, apesar de estar tratando de despesas
+    let expenses = 0;
+    let numExpenses = 0;
+    arrayTransactions.forEach(transaction => {
+        // console.log(transaction.type)
+        if (transaction.type === "-") {
+            expenses += parseFloat(transaction.amount)
+            numExpenses++
+            // console.log(expenses)
+            // console.log(numExpenses)
+        }
+    });
+
+    return {
+        expenses,
+        numExpenses
+    }
+}
+
+async function categorySummary(arrayTransactions, category) {
+    let incomeValue = 0;
+    let expenseValue = 0;
+    let count = 0;
+    let descriptions = []
+
+    arrayTransactions.forEach(transaction => {
+        // console.log(transaction.category)
+        if (transaction.category === category) {
+            count++
+            const note = transaction.note
+            const amount = transaction.amount
+            const type = formatType(transaction.type)
+            descriptions.push({
+                note,
+                amount,
+                type
+            })
+
+            if (transaction.type === "+") {
+                incomeValue += parseFloat(transaction.amount)
+            }
+
+            if(transaction.type === "-") {
+                expenseValue += parseFloat(transaction.amount)
+            }
+            
+        }
+    })
+
+    // const categoryInfo = []
+    // categoryInfo.push(count, incomeValue, expenseValue)
+
+    return {
+        count,
+        income: incomeValue,
+        expenses: expenseValue,
+        descriptions
+    }
+}
+
+
+module.exports = { verifyUser, verifyPassword, getUserId, verifyJWT, getUserInfos, getIncome, getExpenses, categorySummary }
