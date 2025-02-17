@@ -64,17 +64,14 @@ async function getIncome(arrayTransactions) {
     let income = 0;
     let numberIncome = 0;
     arrayTransactions.forEach(transaction => {
-        console.log(transaction.type)
+        // console.log(transaction.type)
         if (transaction.type === "+") {
             income += parseFloat(transaction.amount)
             numberIncome++
-            console.log(income)
-            console.log(numberIncome)
+            // console.log(income)
+            // console.log(numberIncome)
         }
     });
-
-    const incomeInfos = []
-    incomeInfos.push(income, numberIncome)
 
     return {
         income,
@@ -87,19 +84,19 @@ async function getExpenses(arrayTransactions) {
     let expenses = 0;
     let numExpenses = 0;
     arrayTransactions.forEach(transaction => {
-        console.log(transaction.type)
+        // console.log(transaction.type)
         if (transaction.type === "-") {
             expenses += parseFloat(transaction.amount)
             numExpenses++
-            console.log(expenses)
-            console.log(numExpenses)
+            // console.log(expenses)
+            // console.log(numExpenses)
         }
     });
 
-    const expensesInfos = []
-    expensesInfos.push(expenses, numExpenses)
-
-    return expensesInfos
+    return {
+        expenses,
+        numExpenses
+    }
 }
 
 async function categorySummary(arrayTransactions, category) {

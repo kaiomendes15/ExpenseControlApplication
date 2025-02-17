@@ -4,7 +4,7 @@ exports.Income = (async (req, res, next) => {
     const reports = new ReportsModel()
     const income = await reports.income(req.userId)
 
-    console.log(income);
+    // console.log(income);
 
     res.status(200).json({income})
     
@@ -14,9 +14,9 @@ exports.Expenses = (async (req, res, next) => {
     const reports = new ReportsModel()
     const expenses = await reports.expenses(req.userId)
 
-    console.log(expenses);
+    // console.log(expenses);
 
-    res.status(200).json({receita: expenses[0], numReceitas: expenses[1]})
+    res.status(200).json({expenses})
     
 })
 
@@ -27,7 +27,7 @@ exports.Summary = (async (req, res, next) => {
     const reports = new ReportsModel();
     const summary = await reports.summary(id, category)
 
-    console.log(summary)
+    // console.log(summary)
 
     res.status(200).json({summary})
 })
