@@ -20,3 +20,15 @@ exports.Expenses = (async (req, res, next) => {
     
 })
 
+exports.Summary = (async (req, res, next) => {
+    const id = req.userId;
+    const category = req.params.category
+
+    const reports = new ReportsModel();
+    const summary = await reports.summary(id, category)
+
+    console.log(summary)
+
+    res.status(200).json({summary})
+})
+
