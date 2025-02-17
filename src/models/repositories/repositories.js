@@ -94,11 +94,13 @@ async function categorySummary(arrayTransactions, category) {
     let incomeValue = 0;
     let expenseValue = 0;
     let count = 0;
+    let descriptions = []
 
     arrayTransactions.forEach(transaction => {
         // console.log(transaction.category)
         if (transaction.category === category) {
             count++
+            descriptions.push(transaction.note)
 
             if (transaction.type === "+") {
                 incomeValue += parseFloat(transaction.amount)
@@ -117,7 +119,8 @@ async function categorySummary(arrayTransactions, category) {
     return {
         count,
         income: incomeValue,
-        expenses: expenseValue
+        expenses: expenseValue,
+        descriptions
     }
 }
 
