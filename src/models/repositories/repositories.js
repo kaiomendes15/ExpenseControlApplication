@@ -53,15 +53,41 @@ async function verifyJWT(req, res, next) {
 
 async function getIncome(arrayTransactions) {
     let income = 0;
+    let numberIncome = 0;
     arrayTransactions.forEach(transaction => {
         console.log(transaction.type)
         if (transaction.type === "+") {
             income += parseFloat(transaction.amount)
+            numberIncome++
             console.log(income)
+            console.log(numberIncome)
         }
     });
 
-    return income
+    const incomeInfos = []
+    incomeInfos.push(income, numberIncome)
+
+    return incomeInfos
+}
+
+async function getExpenses(arrayTransactions) {
+    // aqui será trabalhado com valores positivos, apesar de estar tratando de despesas
+    let expenses = 0;
+    let numExpenses = 0;
+    arrayTransactions.forEach(transaction => {
+        console.log(transaction.type)
+        if (transaction.type === "-") {
+            expenses += parseFloat(transaction.amount)
+            numExpenses++
+            console.log(expenses)
+            console.log(numExpenses)
+        }
+    });
+
+    const expensesInfos = []
+    expensesInfos.push(expenses, numExpenses)
+
+    return expensesInfos
 }
 
 
