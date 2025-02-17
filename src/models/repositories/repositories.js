@@ -90,5 +90,36 @@ async function getExpenses(arrayTransactions) {
     return expensesInfos
 }
 
+async function categorySummary(arrayTransactions, category) {
+    let incomeValue = 0;
+    let expenseValue = 0;
+    let count = 0;
 
-module.exports = { verifyUser, verifyPassword, getUserId, verifyJWT, getUserInfos, getIncome }
+    arrayTransactions.forEach(transaction => {
+        // console.log(transaction.category)
+        if (transaction.category === category) {
+            count++
+
+            if (transaction.type === "+") {
+                incomeValue += parseFloat(transaction.amount)
+            }
+
+            if(transaction.type === "-") {
+                expenseValue += parseFloat(transaction.amount)
+            }
+            
+        }
+    })
+
+    // const categoryInfo = []
+    // categoryInfo.push(count, incomeValue, expenseValue)
+
+    return {
+        count,
+        income: incomeValue,
+        expenses: expenseValue
+    }
+}
+
+
+module.exports = { verifyUser, verifyPassword, getUserId, verifyJWT, getUserInfos, getIncome, getExpenses, categorySummary }
