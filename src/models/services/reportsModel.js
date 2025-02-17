@@ -1,6 +1,6 @@
 const pool = require('../data')
 const bcrypt = require('bcrypt');
-const { getUserInfos, verifyUser, getIncome, getExpenses } = require('../repositories/repositories')
+const { getUserInfos, verifyUser, getIncome, getExpenses, categorySummary } = require('../repositories/repositories')
 const TransactionModel = require('../services/transactionModel')
 
 module.exports = class Reports {
@@ -24,5 +24,14 @@ module.exports = class Reports {
 
         return expenses
 
+    }
+
+    async summary(userId, category) {
+        const user = new TransactionModel()
+        const transactions = await user.getUserTransactions(userId)
+
+        const summary = categorySummary(transactions, category)
+
+        return summary
     }
 }
