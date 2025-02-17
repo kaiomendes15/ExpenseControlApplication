@@ -76,7 +76,10 @@ async function getIncome(arrayTransactions) {
     const incomeInfos = []
     incomeInfos.push(income, numberIncome)
 
-    return incomeInfos
+    return {
+        income,
+        numberIncome
+    }
 }
 
 async function getExpenses(arrayTransactions) {

@@ -6,7 +6,7 @@ exports.Income = (async (req, res, next) => {
 
     console.log(income);
 
-    res.status(200).json({receita: income[0], numReceitas: income[1]})
+    res.status(200).json({income})
     
 })
 
