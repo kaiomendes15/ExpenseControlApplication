@@ -20,6 +20,14 @@ exports.Expenses = (async (req, res, next) => {
     
 })
 
+exports.Balance = (async (req, res, next) => {
+    const reports = new ReportsModel()
+    const balance = await reports.balance(req.userId)
+
+    res.status(200).json({balance})
+
+})
+
 exports.Summary = (async (req, res, next) => {
     const id = req.userId;
     const category = req.params.category
