@@ -99,6 +99,10 @@ async function getExpenses(arrayTransactions) {
     }
 }
 
+function getBalance(income, expenses) {
+    return income - expenses
+}
+
 async function categorySummary(arrayTransactions, category) {
     let incomeValue = 0;
     let expenseValue = 0;
@@ -141,4 +145,4 @@ async function categorySummary(arrayTransactions, category) {
 }
 
 
-module.exports = { verifyUser, verifyPassword, getUserId, verifyJWT, getUserInfos, getIncome, getExpenses, categorySummary }
+module.exports = { verifyUser, verifyPassword, getUserId, verifyJWT, getUserInfos, getIncome, getExpenses, categorySummary, getBalance }
