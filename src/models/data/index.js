@@ -1,12 +1,38 @@
+// const { Pool } = require('pg');
+
+// const pool = new Pool({
+//     user: 'postgres',
+//     host: 'localhost',
+//     database: 'ControleGastos',
+//     password: '141517',
+//     port: 5432
+// });
+
+
+require('dotenv').config();
 const { Pool } = require('pg');
 
+const { DATABASE_URL } = process.env;
+
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'ControleGastos',
-    password: '141517',
-    port: 5432
-});
+    connectionString: DATABASE_URL, // O correto é connectionString
+    ssl: { rejectUnauthorized: false } // Necessário para Neon
+  });
+  
+
+async function getPgVersion() {
+  const client = await pool.connect();
+  try {
+    const result = await client.query('SELECT version()');
+    console.log(result.rows[0]);
+  } finally {
+    client.release();
+  }
+}
+
+getPgVersion();
+
+
 
 // pool.connect()
 //     .then(() => console.log("Conectado ao PostgresSQL localmente."))

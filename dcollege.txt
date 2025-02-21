@@ -1,0 +1,17 @@
+PGHOST='ep-dawn-block-a8ia5ajh-pooler.eastus2.azure.neon.tech'
+PGDATABASE='ControleGastos'
+PGUSER='ControleGastos_owner'
+PGPASSWORD='npg_wIxz2dAC0HsX'
+PGPORT='5432'
+DATABASE_URL='postgresql://ControleGastos_owner:npg_wIxz2dAC0HsX@ep-dawn-block-a8ia5ajh-pooler.eastus2.azure.neon.tech/ControleGastos?sslmode=require'
+SECRET_KEY=8f4c9b5e1a2d3c4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789
+
+{
+  "amount": 500,
+  "category": "investments",
+  "type": "+",
+  "note": "ações Vale."
+  
+}
+
+x-access-token
