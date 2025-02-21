@@ -12,7 +12,7 @@ A aplicação foi construída utilizando Node.js com Express.js e conecta-se ao 
 
 - Node.js
 - Express.js
-- PostgreSQL
+- PostgreSQL / Neon (remoto)
 
 **Segurança**:
 
@@ -22,7 +22,7 @@ A aplicação foi construída utilizando Node.js com Express.js e conecta-se ao 
 
 - PostgreSQL (relacional)
 - Tabelas e chaves estrangeiras para integridade referencial
-- 
+  
 ### Funcionalidades
 - Cadastro de transações: O usuário pode registrar uma transação financeira, incluindo detalhes como valor, categoria, tipo (entrada ou saída), data da transação e observações.
 - Listagem de transações: O usuário pode visualizar todas as transações registradas com filtros para categoria, tipo de transação e data.
@@ -49,7 +49,7 @@ The application is built with Node.js using Express.js and connects to a Postgre
 
 - Node.js
 - Express.js
-- PostgreSQL
+- PostgreSQL / / Neon (remote)
 
 **Security**:
 
