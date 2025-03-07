@@ -13,6 +13,7 @@ exports.Income = (async (req, res, next) => {
 exports.Expenses = (async (req, res, next) => {
     const reports = new ReportsModel()
     const expenses = await reports.expenses(req.userId)
+    
 
     // console.log(expenses);
 
@@ -34,6 +35,14 @@ exports.Summary = (async (req, res, next) => {
 
     const reports = new ReportsModel();
     const summary = await reports.summary(id, category)
+
+    if (summary === "Invalid category.") {
+        return res.status(400).json({ error: summary });
+    }
+
+    if (summary === `Transactions not found.`) {
+        res.status(404).json({summary})
+    }
 
     // console.log(summary)
 

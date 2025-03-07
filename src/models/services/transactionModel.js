@@ -23,6 +23,10 @@ module.exports = class Transactions {
         const query = 'SELECT * FROM transactions WHERE userId = $1';
         const tables = await pool.query(query, [userId]);
 
+        if (tables.rows === 0) {
+            return `Transactions not found.`
+        }
+
         return tables.rows
     }
 

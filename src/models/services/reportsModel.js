@@ -10,7 +10,7 @@ module.exports = class Reports {
         const user = new TransactionModel()
         const transactions = await user.getUserTransactions(userId)
         
-        const income = getIncome(transactions)
+        const income = await getIncome(transactions)
 
         return income
     }
@@ -20,7 +20,7 @@ module.exports = class Reports {
         const user = new TransactionModel()
         const transactions = await user.getUserTransactions(userId)
         
-        const expenses = getExpenses(transactions)
+        const expenses = await getExpenses(transactions)
 
         return expenses
 
@@ -37,9 +37,17 @@ module.exports = class Reports {
     }
 
     async summary(userId, category) {
+        console.log(category)
+        if (category != "investments" && category != "bills." && category != "leisure.") {
+            return "Invalid category."
+        }
         const user = new TransactionModel()
         const transactions = await user.getUserTransactions(userId)
 
+        if (transactions === `Transactions not found.`) {
+            return `Transactions not found.`
+        }
+        // fazer uma checagem de categoria, limitar as categorias possiveis.
         const summary = categorySummary(transactions, category)
 
         return summary
