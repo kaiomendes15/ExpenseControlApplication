@@ -6,8 +6,8 @@ module.exports = class Transactions {
     constructor(){}
     async createTransaction(userId, amount, category, type, note = '') {
         // console.log("criação de transação")
-        const user = getUserInfos(userId)
-        const userExist = verifyUser(user.email)
+        const user = await getUserInfos(userId)
+        const userExist = await verifyUser(user.email)
         if (!userExist) {
             return 'User not found.'
         }
