@@ -64,4 +64,30 @@ module.exports = class Goals {
 
         return 'Goal successfully deleted.'
     }
+
+    async updateGoal(goalId, userId, goalName, targetAmount, currentAmount, deadline, status = "In progress.") {
+        const goalExist = await this.getGoalbyId(goalId, userId)
+
+        if (goalExist === 'Goal not found.') {
+            return 'Goal not found.'
+        }
+
+        const client = await pool.connect()
+        console.log("Entrou na função")
+        try {
+            await client.query('BEGIN')
+            const query = `UPDATE goals SET goalName = $1, targetAmount = $2,currentAmount = $3, deadline = $4, status = $5 WHERE id = $6`;
+
+            await client.query(query, [goalName, targetAmount, currentAmount, deadline, status, goalId]);
+            await client.query('COMMIT')
+
+            return 'Transaction updated successfully'
+            
+        } catch (e) {
+            await client.query('ROLLBACK')
+            throw e
+        } finally {
+            client.release()
+        }
+    }
 }
