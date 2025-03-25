@@ -66,3 +66,20 @@ exports.DeleteGoalById = (async (req, res, next) => {
     return res.status(200).json({message: goal})
 
 })
+
+exports.EditGoalById = (async (req, res, next) => {
+    // params
+    const userId = req.userId;
+    const goalId = req.params
+    const { goalName, targetAmount, currentAmount, deadline, status } = req.body
+
+    // goal methods
+    const services = new GoalModels()
+    const stats = await services.updateGoal(goalId, userId, goalName, targetAmount, currentAmount, deadline, status)
+
+    if (stats === 'Goal not found.') {
+        return res.status(404).json({message: 'Goal not found.'})
+    }
+
+    return res.status(200).json({message: stats})
+})

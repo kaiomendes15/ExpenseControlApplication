@@ -9,5 +9,6 @@ router.post('/goals', verifyJWT, goalsController.SetGoal)
 router.get('/goals', verifyJWT, goalsController.GetGoals)
 router.get('/goals/:id', verifyJWT, goalsController.GetGoalById)
 router.delete('/goals/:id', verifyJWT, goalsController.DeleteGoalById)
+router.put('/goals/:id', verifyJWT, goalsController.EditGoalById)
 
 module.exports = router
