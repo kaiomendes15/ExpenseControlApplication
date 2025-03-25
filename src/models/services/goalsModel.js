@@ -59,10 +59,23 @@ module.exports = class Goals {
             return 'Goal not found.'
         }
 
-        const query = 'DELETE FROM goals WHERE id = $1 and user_id = $2';
-        const goal = await pool.query( query, [ goalId, userId ] )
+        const client = await pool.connect()
+        // console.log("Entrou na função")
+        try {
+            await client.query('BEGIN')
+            const query = `DELETE FROM goals WHERE id = $1 and user_id = $2`;
 
-        return 'Goal successfully deleted.'
+            await client.query(query, [goalId, userId]);
+            await client.query('COMMIT')
+
+            return 'Goal successfully deleted.'
+            
+        } catch (e) {
+            await client.query('ROLLBACK')
+            throw e
+        } finally {
+            client.release()
+        }
     }
 
     async updateGoal(goalId, userId, goalName, targetAmount, currentAmount, deadline, status = "In progress.") {
@@ -73,7 +86,7 @@ module.exports = class Goals {
         }
 
         const client = await pool.connect()
-        console.log("Entrou na função")
+        // console.log("Entrou na função")
         try {
             await client.query('BEGIN')
             const query = `UPDATE goals SET name = $1, target_amount = $2,current_amount = $3, deadline = $4, status = $5 WHERE id = $6`;
