@@ -76,7 +76,7 @@ module.exports = class Goals {
         console.log("Entrou na função")
         try {
             await client.query('BEGIN')
-            const query = `UPDATE goals SET goalName = $1, targetAmount = $2,currentAmount = $3, deadline = $4, status = $5 WHERE id = $6`;
+            const query = `UPDATE goals SET name = $1, target_amount = $2,current_amount = $3, deadline = $4, status = $5 WHERE id = $6`;
 
             await client.query(query, [goalName, targetAmount, currentAmount, deadline, status, goalId]);
             await client.query('COMMIT')

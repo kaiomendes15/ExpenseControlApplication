@@ -70,7 +70,7 @@ exports.DeleteGoalById = (async (req, res, next) => {
 exports.EditGoalById = (async (req, res, next) => {
     // params
     const userId = req.userId;
-    const goalId = req.params
+    const goalId = req.params.id
     const { goalName, targetAmount, currentAmount, deadline, status } = req.body
 
     // goal methods
